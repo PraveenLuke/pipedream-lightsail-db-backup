@@ -1,0 +1,48 @@
+schema: workflow/2022.04
+name: DB Backup Deploy
+settings:
+  error_notification: true
+  lambda_memory: 512
+  lambda_timeout: 750
+triggers:
+- id: ti_REPLACE_ME
+steps:
+- namespace: code
+  runtime: python3.12
+  uses: "./code/entry.py"
+- namespace: Delay
+  runtime: nodejs20.x
+  uses: delay-workflow-delay@0.0.2
+  props:
+    delayDurationValue: 5
+    delayDurationUnit: Minutes
+- namespace: post_request
+  runtime: nodejs20.x
+  uses: http-post-request@1.1.3
+  props:
+    httpRequest:
+      auth:
+        type: none
+        username: ''
+        password: ''
+        token: ''
+      body:
+        contentType: custom
+        fields:
+        - name: ''
+          value: ''
+          disabled: true
+        mode: fields
+        type: raw
+        raw: "{{steps.code.$return_value.initial_state}}"
+      headers:
+      - name: ''
+        value: ''
+        disabled: true
+      method: POST
+      params:
+      - name: ''
+        value: ''
+        disabled: true
+      url: https://YOUR_MONITOR_WEBHOOK.m.pipedream.net
+      tab: Body

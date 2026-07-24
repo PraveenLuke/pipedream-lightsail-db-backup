@@ -1,0 +1,18 @@
+schema: workflow/2022.04
+name: DB Backup Monitor
+settings:
+  error_notification: true
+  lambda_memory: 512
+  lambda_timeout: 750
+triggers:
+- id: hi_REPLACE_ME
+steps:
+- namespace: Delay
+  runtime: nodejs20.x
+  uses: delay-workflow-delay@0.0.2
+  props:
+    delayDurationValue: 60
+    delayDurationUnit: Seconds
+- namespace: code
+  runtime: python3.12
+  uses: "./code/entry.py"
