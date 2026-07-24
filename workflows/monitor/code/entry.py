@@ -453,15 +453,6 @@ def _last_job_slice(log_events, mode):
         return messages
     return messages[last_start:]
 
-def is_backup_complete(log_events):
-    """Backward-compatible wrapper for backup completion checks."""
-    return is_job_complete(log_events, "backup")
-
-def detect_multiple_backup_runs(log_events):
-    """Backward-compatible wrapper for backup restart detection."""
-    multiple_runs, job_starts = detect_multiple_job_runs(log_events, "backup")
-    return multiple_runs, job_starts
-
 def verify_backup_in_s3(s3, config):
     """Verify backup files in S3"""
     print("\nVerifying backup in S3")
@@ -668,10 +659,6 @@ def check_job_completion_status(s3_backup_files, b2_backup_files, b2_enabled, mo
             return True
 
     return False
-
-def check_backup_completion_status(s3_backup_files, b2_backup_files, b2_enabled):
-    """Backward-compatible wrapper for backup completion checks."""
-    return check_job_completion_status(s3_backup_files, b2_backup_files, b2_enabled, "backup")
 
 def verify_backups(s3, config):
     """Verify backups in both S3 and B2 (if configured)"""

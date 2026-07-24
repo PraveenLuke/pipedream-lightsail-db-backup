@@ -63,6 +63,8 @@ Do not rely on the schedule until this manual run completes successfully.
 
 Set `MODE=restore`, select the backup expected by your dump/restore image, and trigger the Deploy workflow manually. Confirm the target database and credentials before running: restore mode can replace existing data. The Monitor workflow detects restore completion from container logs and then deletes or disables the service according to `DESTROY_ON_COMPLETION`.
 
+Restore currently targets Postgres-style images that ship `/data/restore.sh` (pg_restore-style); the Deploy workflow patches that script. MySQL restore needs a compatible image or code changes—backup supports MySQL via `DOCKER_IMAGE`, but restore does not yet share the same path.
+
 Return `MODE` to `backup` before re-enabling the normal backup schedule.
 
 ## 8. Using the GitHub Template

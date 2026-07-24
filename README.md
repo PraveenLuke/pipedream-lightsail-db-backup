@@ -29,7 +29,9 @@ flowchart LR
 
 ## Postgres vs MySQL
 
-The same Deploy and Monitor workflows support either database engine. Set `DOCKER_IMAGE` to a compatible dump/restore image and provide the DB environment variables that image expects. Use `DB_PORT=5432` and the Postgres variables for Postgres; use `DB_PORT=3306` and a MySQL image implementing the same expected environment contract for MySQL. See [`.env.example`](.env.example) for both configurations.
+**Backup** works with either engine via the same Deploy and Monitor workflows. Set `DOCKER_IMAGE` to a compatible dump image and provide the DB environment variables that image expects. Use `DB_PORT=5432` and the Postgres variables for Postgres; use `DB_PORT=3306` and a MySQL image for MySQL. See [`.env.example`](.env.example) for both configurations.
+
+**Restore** currently assumes a Postgres-oriented dump/restore image that provides `/data/restore.sh` (pg_restore-style). The Deploy workflow patches that script when `MODE=restore`. MySQL restore requires a compatible image and code changes, or a different restore path—do not assume the same restore workflow works out of the box for MySQL.
 
 ## Workflows
 
